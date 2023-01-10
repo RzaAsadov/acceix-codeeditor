@@ -103,9 +103,9 @@ public class NCodeFunctions extends org.acceix.frontend.helpers.ModuleHelper {
         
     }
     
-        public ModuleHelper getInstance() {
-            return new NCodeFunctions();
-        }    
+    public ModuleHelper getInstance() {
+        return new NCodeFunctions();
+    }    
     
     public List<Object[]> getFieldsList () {
 
@@ -340,6 +340,7 @@ public class NCodeFunctions extends org.acceix.frontend.helpers.ModuleHelper {
                 headers.add("Func. inputs");
                 headers.add("Last modified");
                 headers.add("Actions");
+                //headers.add(" ");
                 
                 File[] files = new File(getGlobalEnvs().get(getModuleName() + "_path").toString() + "/" + catalog).listFiles();
                 Arrays.sort(files, Comparator.comparingLong(File::lastModified).reversed());                

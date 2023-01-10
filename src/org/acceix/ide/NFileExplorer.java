@@ -126,27 +126,29 @@ public class NFileExplorer {
                 
                 int index=0;
                 
-                List<String> folder_Tableheaders = new LinkedList<>();
                 
                 if (catalog.startsWith("/") || catalog.startsWith(".") || catalog.contains("..")) catalog = ""; 
-                    Map<String,Object> folders_column_current_path = new LinkedHashMap<>();                
-                    folders_column_current_path.put(String.valueOf(folders_column_current_path.size()),
-                                                                   itemPath.replaceFirst(globalPath, "").replaceAll("/", " / ") + " / " + catalog.replaceAll("/", " / ") + " ");
+                
+                Map<String,Object> current_path_folders_data = new LinkedHashMap<>();
 
+                Map<String,Object> folders_column_current_path = new LinkedHashMap<>();                
+                current_path_folders_data.put("folder_name",
+                                                itemPath.replaceFirst(globalPath, "").replaceAll("/", " / ") + " / " + catalog.replaceAll("/", " / ") + " ");
+                current_path_folders_data.put("files_count", -1);
+                current_path_folders_data.put("folder_class", item_class);
+                    
+                    
 
-                 folder_tableRows.put(index, folders_column_current_path);
+                 folder_tableRows.put(index, current_path_folders_data);
                  index++;
  
                 if (!catalog.equals("")) {
-                    
-                    String go_to_parent = "<a href=\"#\" onClick=\"loadContainerQuery('" + item_class + "','read','#netondocontentbody','" 
-                                        + "catalog=" 
-                                        +  new File(itemPath + "/" + catalog).getParent().replaceFirst(itemPath, "").replaceFirst("/", "")
-                                        + "');\">"
-                                        + "<i class=\"fa fa-folder-open ml-3\"></i><span>..</span></a>";
 
+                         String parent_folder = new File(itemPath + "/" + catalog).getParent().replaceFirst(itemPath, "").replaceFirst("/", "");
                          Map<String,Object> folders_column_go_to_parent = new LinkedHashMap<>();                
-                         folders_column_go_to_parent.put(String.valueOf(folders_column_go_to_parent.size()),go_to_parent);
+                            folders_column_go_to_parent.put("folder_name",parent_folder);
+                            folders_column_go_to_parent.put("files_count", -2);
+                            folders_column_go_to_parent.put("folder_class", item_class);
                          folder_tableRows.put(index, folders_column_go_to_parent);    
                          index++;
                          
@@ -154,11 +156,10 @@ public class NFileExplorer {
 
 
 
-                 String create_new_folder = "<a href=\"#\" onClick=\"createFolder('" + catalog + "');\"><i class=\"fa fa-plus-square ml-0\"></i><span class=\"ml-1 primary\">Create new catalog</span></a>";
+                 //String create_new_folder = "<a href=\"#\" onClick=\"createFolder('" + catalog + "');\"><i class=\"fa fa-plus-square ml-0\"></i><span class=\"ml-1 primary\">Create new catalog</span></a>";
 
-
-                 folder_Tableheaders.add(create_new_folder);
                     
+                 
                     var objectsDir = new File(itemPath + "/" + catalog);
 
                     if (!objectsDir.exists() || !objectsDir.isDirectory()) {
@@ -176,15 +177,11 @@ public class NFileExplorer {
                             
                                 Map<String,Object> folders_columns_n = new LinkedHashMap<>();
                                 
+                                /*
                                 String deleteLink = "<div style=\"display: table-cell; width: 0%;\"><a href=\"#\" onClick=\"deleteFolder('" + objfile.getAbsolutePath().replaceFirst(itemPath + "/", "") + "');\">"
                                                     + "<i class=\"fa fa-trash-o warning  ml-3\"></i></a></div>";
                                 
-                                
-                                String folderLink = "<div style=\"display: table-cell\"><a href=\"#\" onClick=\"loadContainerQuery('" + item_class + "','read','#netondocontentbody','"
-                                                    + "catalog=" + objfile.getAbsolutePath().replaceFirst(itemPath + "/", "") + "');\">"
-                                                    + "<i class=\"fa fa-folder ml-3\"></i><span class=\"ml-1\">" + objfile.getName()  + " (" + filesInside.length + ")"+ "</span></a></div>";
-                                
-                                
+
                                 if (filesInside.length == 0) {
                                     folderLink = folderLink.replaceFirst("fa fa-folder ml-3", "fa fa-folder warning ml-3");
                                     String folderColumn = "<div style=\"display: table;\"><div style=\"display: table-row\">" + folderLink + deleteLink + "</div>";                                
@@ -195,10 +192,26 @@ public class NFileExplorer {
                                     String folderColumn = "<div style=\"display: table;\"><div style=\"display: table-row\">" + folderLink + deleteLink + "</div></div>";                                
                                     folders_columns_n.put(String.valueOf(folders_columns_n.size()),folderColumn);
                                                                        
-                                }                         
+                                } 
+
+                                */
+                                
+                                Map<String,Object> folders_data = new LinkedHashMap<>();
+                                
+                                String deleteLink = objfile.getAbsolutePath().replaceFirst(itemPath + "/", "");
+                                
+
+                                
+                                
+                                folders_data.put("folder_path", objfile.getAbsolutePath().replaceFirst(itemPath + "/", ""));
+                                folders_data.put("folder_name", objfile.getAbsolutePath().replaceFirst(itemPath + "/" + catalog, "").replaceFirst("/", ""));
+                                folders_data.put("files_count", filesInside.length);
+                                folders_data.put("folder_class", item_class);
+                                
+                                //folders_columns_n.put(String.valueOf(folders_columns_n.size()),folders_data);
 
 
-                                folder_tableRows.put(index, folders_columns_n);
+                                folder_tableRows.put(index, folders_data);
                                 index++;
                                 
                         }                    
@@ -208,7 +221,6 @@ public class NFileExplorer {
                 Map<String,Object> retValue = new LinkedHashMap<>();
                 
                 
-                retValue.put("folder_Tableheaders", folder_Tableheaders);
                 retValue.put("folder_tableRows", folder_tableRows); 
                 retValue.put("current_catalog", catalog);
                 

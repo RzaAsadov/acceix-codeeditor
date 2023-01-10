@@ -360,7 +360,8 @@ public class NCodeObjects extends org.acceix.frontend.helpers.ModuleHelper {
                 headers.add("Tables");
                 //headers.add("Fields");
                 headers.add("Last modified");
-                headers.add("Actions");                
+                headers.add("Actions");  
+                headers.add(".");  
                 
                 int index=0;
                 

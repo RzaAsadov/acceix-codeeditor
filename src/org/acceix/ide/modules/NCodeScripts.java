@@ -86,7 +86,7 @@ public class NCodeScripts extends org.acceix.frontend.helpers.ModuleHelper{
     }
     
         public ModuleHelper getInstance() {
-            return new NCodeObjects();
+            return new NCodeScripts();
         }    
     
     public List<Object[]> getFieldsList () {
