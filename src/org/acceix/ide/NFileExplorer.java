@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2022 Rza Asadov (rza dot asadov at gmail dot com).
+ * Copyright 2022 Rza Asadov (rza at asadov dot me).
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,8 +28,6 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import org.acceix.logger.NLog;
 import org.acceix.logger.NLogBlock;
